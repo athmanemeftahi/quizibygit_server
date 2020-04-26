@@ -1,0 +1,25 @@
+{
+  "name": "quizibygit_server",
+  "version": "1.0.0",
+  "description": "Jeux Quiz",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "passport": "^0.4.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/athmanemeftahi/quizibygit_server.git"
+  },
+  "author": "Noman & Athmane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/athmanemeftahi/quizibygit_server/issues"
+  },
+  "homepage": "https://github.com/athmanemeftahi/quizibygit_server#readme"
+}
