@@ -1,15 +1,28 @@
 var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')();
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+app.listen(443);
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
+var question = 4;
+var category = 5;
+var reponse = 4;
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
-});
+//var mysql      = require('mysql');
+//var connection = mysql.createConnection({
+//  host     : '109.234.165.84',
+//  user     : 'fastfoodproj_quiziby',
+//  password : 'MZSfwm?)+mzd'
+//});
+// connection.connect();
+
+  io.of('/quiz').on('connection', function (socket) {
+  });
+
+  // connexion à la room, l'utilisateur est connecté
+  io.on('connection', (socket) => {
+    console.log("L'utilisateur est connecté à la room");
+  });
+
+ var categorychoose = Math.floor(Math.random() * category) + 1;
+
+ console.log('randomvar: '+categorychoose);
