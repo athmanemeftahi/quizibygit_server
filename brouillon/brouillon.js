@@ -28,22 +28,24 @@ varcategory= rand 1 category
 varquestion= rand 1 question
 varreponse= rand 1 4
 
+//déclaration variable
 varresponse1= null
 varreponse2= null
 varreponse3=null
 varreponse4=null
-
 varsqlreponse1=null // bonne réponse
 varsqlreponse2=null // mauvaise réponse
 
 SQL= select bonne reponseid from question dans var varsqlreponse1
 
+//Bonne réponse dans bonne variable
 if varreponse = 1
 varresponse1= varsqlreponse1
 if varreponse = 2
 varresponse2= varsqlreponse1
 etc
 
+//Mauvaises réponses dans variables restante
 if varreponse1 == null
 début boucle
 SQL= select reponseid dans reponse from category random dans var varsqlreponse2
@@ -61,6 +63,8 @@ if idclientenvoyé == varsqlreponse1
 gagné
 else
 perdu
+
+//Fin code
 
 io.on('connection', (socket) => {
   console.log('a user connected');

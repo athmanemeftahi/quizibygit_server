@@ -9,26 +9,40 @@ server.listen(8080);
 
 var question = 4;
 var category = 5;
-var reponse = 4;
+var reponses = 4;
 
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var mysql = require('mysql');
+var connectionsql = mysql.createConnection({
 host     : '109.234.165.84',
 user     : 'fastfoodproj_quiziby',
-password : 'mP)=dZ5vm=e1'
+password : 'mP)=dZ5vm=e1',
+database: "fastfoodproj_quiziby"
 });
-
-connection.connect();
 
 io.sockets.on('connection', function (socket) {
     console.log('client connecté');
 });
 
  var questionchoose = Math.floor(Math.random() * question) + 1;
-  console.log('randomvar: '+questionchoose);
 
  var categorychoose = Math.floor(Math.random() * category) + 1;
- console.log('randomvar: '+categorychoose);
 
- var reponsechoose = Math.floor(Math.random() * reponse) + 1;
- console.log('randomvar: '+reponsechoose);
+ var reponsechoose = Math.floor(Math.random() * reponses) + 1;
+
+var reponse1 = null;
+var reponse2 = null;
+var reponse3 = null;
+var reponse4= null;
+var sqlreponse1=null;
+var sqlreponse2=null;
+
+connectionsql.connect(function(err) {
+  if (err) throw err;
+  connectionsql.query("SELECT id_answer FROM questions WHERE id_question="+questionchoose, function (err, sqlreponse1, fields) {
+    if (err) throw err;
+    console.log(sqlreponse1);
+  });
+});
+
+
+  
