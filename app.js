@@ -44,5 +44,31 @@ connectionsql.connect(function(err) {
   });
 });
 
+// INSERT INTO `questions` (`id_question`, `id_answer`, `id_category`) VALUES ('1', '4', '1');
 
-  
+// bonne réponse dans la bonne variable
+if (reponsechoose === 1) {
+  var reponse1 = varsqlreponse1;
+} else if (reponsechoose === 2) {
+  var reponse2 = varsqlreponse1;
+} else if (reponsechoose === 3) {
+  var reponse3 = varsqlreponse1;
+} else if (reponsechoose === 4) {
+  var reponse4 = varsqlreponse1;
+}
+
+// Mauvaises réponses
+if (reponse1 == null) {
+  var varok = 0;
+  while(varok==0)
+  {
+    connectionsql.connect(function(err) {
+      if (err) throw err;
+      connectionsql.query("SELECT id_answer FROM questions WHERE id_question="+questionchoose, function (err, sqlreponse2, fields) {
+        if (varsqlreponse1 != varsqlreponse2) varok = 1;
+        if (err) throw err;
+        console.log(sqlreponse2);
+      });
+    }); 
+  }
+}
