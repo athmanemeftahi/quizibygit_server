@@ -66,7 +66,7 @@ if (reponsechoose === 1) {
 }
 
 for (varbreak = 0; varbreak < 1; varbreak++) {
-  var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" LIMIT 1";
+  var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
   connectionsql.query(queryString, function(err, rows, fields)
   {
     if (err) throw err;
