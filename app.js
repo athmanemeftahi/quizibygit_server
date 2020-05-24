@@ -1,9 +1,8 @@
 var app = require('express')();
 var http = require('http');
+var io = require('socket.io')(http);
 var server = http.createServer(function(req, res) {
 });
-
-var io = require('socket.io').listen(server);
 
 server.listen(8080);
 
@@ -21,7 +20,7 @@ server.listen(8080);
  connectionsql.connect();
 
 //Initialisation variables
-var question = 1;
+var question = 4;
 var category = 1;
 var reponses = 4;
 var reponse1 = 0;
@@ -83,5 +82,14 @@ for (varbreak = 0; varbreak < 1; varbreak++) {
   );
 }
 
-//Fin du code
-console.log("--- Fin du code ---");
+io.on('connect', onConnect);
+function onConnect(socket){
+  // Envoi des réponses au client
+  socket.emit('reponse', reponse1, reponse2, reponse3, reponse4);
+   // Quand le serveur reçoit un des choix du client  
+ socket.on('reponse1', 'reponse2', 'reponse3', 'reponse4', function (reponse) {
+  console.log('le client répond : ' + reponse);
+})
+}
+
+
