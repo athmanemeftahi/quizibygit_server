@@ -64,32 +64,97 @@ if (reponsechoose === 1) {
   var reponse4 = varsqlbonnereponse;
 }
 
-for (varbreak = 0; varbreak < 1; varbreak++) {
-  var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
-  connectionsql.query(queryString, function(err, rows, fields)
-  {
-    if (err) throw err;
-    if (varsqlbonnereponse != rows[0].id_answer){
-      console.log('varbreak: ', varbreak);
-      reponse1 = rows[0].id_answer;
-      console.log('ID bonne réponse 1: ', reponse1);
-    }
-    else
+// Mauvaise réponse 1
+if(reponse1 == 0){
+  for (varbreak = 0; varbreak < 1; varbreak++) {
+    var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
+    connectionsql.query(queryString, function(err, rows, fields)
     {
-      varbreak=varbreak-1;
+      if (err) throw err;
+      if (varsqlbonnereponse != rows[0].id_answer){
+        reponse1 = rows[0].id_answer;
+        console.log('ID mauvaise réponse 1: ', reponse1);
+      }
+      else
+      {
+        varbreak=varbreak-1;
+      }
     }
+    );
   }
-  );
+}
+
+// réponse 2
+if(reponse2 == 0){
+  for (varbreak = 0; varbreak < 1; varbreak++) {
+    var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
+    connectionsql.query(queryString, function(err, rows, fields)
+    {
+      if (err) throw err;
+      if (varsqlbonnereponse != rows[0].id_answer && reponse1 != rows[0].id_answer ){
+        reponse2 = rows[0].id_answer;
+        console.log('ID mauvaise réponse 2: ', reponse2);
+      }
+      else
+      {
+        varbreak=varbreak-1;
+      }
+    }
+    );
+  }
+}
+// Réponse 3
+if(reponse3 == 0){
+  for (varbreak = 0; varbreak < 1; varbreak++) {
+    var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
+    connectionsql.query(queryString, function(err, rows, fields)
+    {
+      if (err) throw err;
+      if (varsqlbonnereponse != rows[0].id_answer && reponse1 != rows[0].id_answer && reponse2 != rows[0].id_answer){
+        reponse3 = rows[0].id_answer;
+        console.log('ID mauvaise réponse 3: ', reponse3);
+      }
+      else
+      {
+        varbreak=varbreak-1;
+      }
+    }
+    );
+  }
+}
+// Réponse 4
+if(reponse4 == 0){
+  for (varbreak = 0; varbreak < 1; varbreak++) {
+    var queryString = "SELECT id_answer FROM answers WHERE id_category="+categorychoose+" ORDER BY RAND() LIMIT 1";
+    connectionsql.query(queryString, function(err, rows, fields)
+    {
+      if (err) throw err;
+      if (varsqlbonnereponse != rows[0].id_answer && reponse1 != rows[0].id_answer && reponse2 != rows[0].id_answer && reponse3 != rows[0].id_answer){
+        reponse4 = rows[0].id_answer;
+        console.log('ID mauvaise réponse 4: ', reponse4);
+      }
+      else
+      {
+        varbreak=varbreak-1;
+      }
+    }
+    );
+  }
 }
 
 io.on('connect', onConnect);
 function onConnect(socket){
-  // Envoi des réponses au client
-  socket.emit('reponse', reponse1, reponse2, reponse3, reponse4);
-   // Quand le serveur reçoit un des choix du client  
- socket.on('reponse1', 'reponse2', 'reponse3', 'reponse4', function (reponse) {
-  console.log('le client répond : ' + reponse);
-})
+  // Envoi question&réponses au client
+  socket.emit('QCM', question, reponse1, reponse2, reponse3, reponse4);
+  // Quand le serveur reçoit un des choix du client  
+  socket.on('reponse', function (reponse) {
+    console.log('le client répond : ' + reponse);
+    if (reponse == varsqlbonnereponse) {
+      socket.emit('ANSWER', 0);
+    }
+    else
+    {
+      socket.emit('ANSWER', varsqlbonnereponse);
+    }
+  })
 }
-
-
